@@ -1,12 +1,16 @@
 ﻿import os
-
+from datetime import datetime
 
 def logger(path):
-    ...
-    
+        
     def __logger(old_function):
         def new_function(*args, **kwargs):
-            ...
+            result = old_function(*args, **kwargs)
+            with open (f'{path}', 'a', encoding ='utf-8') as file:
+                data = [f'Время вызова функции: {datetime.now()}\n', f'Имя функции: {old_function.__name__}\n',
+                        f'Аргументы функции: {args}, {kwargs}\n', f'Вернувшееся значение: {result}\n\n']
+                file.writelines(data)
+            return result
 
         return new_function
 
@@ -44,7 +48,7 @@ def test_2():
 
         assert os.path.exists(path), f'файл {path} должен существовать'
 
-        with open(path) as log_file:
+        with open(path, encoding = 'utf-8') as log_file:
             log_file_content = log_file.read()
 
         assert 'summator' in log_file_content, 'должно записаться имя функции'

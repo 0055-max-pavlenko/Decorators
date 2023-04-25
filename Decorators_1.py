@@ -3,8 +3,7 @@ from datetime import datetime
 
 
 def logger(old_function):
-    ...
-
+    
     def new_function(*args, **kwargs):
 
         result = old_function(*args, **kwargs)
